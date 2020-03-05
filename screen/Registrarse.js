@@ -1,8 +1,15 @@
+/* 
+      DESARROLLADOR: Sheedyt Adamari López Sarabia
+      GRUPO: TI01SM-18
+      FECHA: 04 de Marzo de 2020
+      DESCRIPCIÓN: La pantalla Registrarse solo permite al usuario enlazarse a la página de inicio de
+                   Facebook y Twitter, además de regresar a la pantalla de Login.
+*/
+
 import React, { Component } from 'react';
 import { Container, Card, Content,  Body, Text, Button, Item, CardItem, Input, Icon} from 'native-base';
 import { StyleSheet, Linking, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 

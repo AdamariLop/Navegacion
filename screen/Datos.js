@@ -1,3 +1,12 @@
+/* 
+      DESARROLLADOR: Sheedyt Adamari López Sarabia
+      GRUPO: TI01SM-18
+      FECHA: 04 de Marzo de 2020
+      DESCRIPCIÓN: La pantalla de Datos, recibe los valores de las variables insertadas por el usuario,
+                   por medio de 'this.props.params.'. Éstas son recibidas desde Login.js.
+                   El botón cerrar sesión navega a la pantalla de Login.js.
+*/
+
 import React, { Component } from 'react';
 import { Container, Content, CardItem,Text, Button } from 'native-base';
 import {StyleSheet} from 'react-native';
@@ -15,10 +24,10 @@ export default class IconTextboxExample extends Component {
                 <Text style={styles.textCenter}>{this.props.route.params.titulo}</Text>
               </CardItem>
               <CardItem>
-              <Text style={styles.textCenter}>{this.props.route.params.nombre}</Text>
+              <Text style={styles.textCenter}>Usuario: {this.props.route.params.nombre}</Text>
               </CardItem>
               <CardItem>
-              <Text style={styles.textCenter}>{this.props.route.params.contraseña}</Text>
+              <Text style={styles.textCenter}>Contraseña: {this.props.route.params.contraseña}</Text>
               </CardItem>
               <Button primary style={{justifyContent:'center', marginLeft: '25%', width: 170, margin: 10}}
             onPress={() => navegar.navigate('Login') }>
