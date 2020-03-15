@@ -23,7 +23,7 @@ constructor(props) {
     correo: ''
   }
 }
-
+ 
  UserRegistrationFunction = () =>{
   
   const { user }  = this.state ;

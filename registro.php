@@ -64,4 +64,4 @@ $json = json_encode($MSG);
  }
  }
  mysqli_close($con);
-?> 
+?>

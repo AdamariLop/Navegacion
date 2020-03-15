@@ -12,4 +12,4 @@ $host_user = "root@localhost";
 //Define your database password here.
 $host_password = "";
 
-?> 
+?>
