@@ -8,12 +8,48 @@
 
 import React, { Component } from 'react';
 import { Container, Card, Content,  Body, Text, Button, Item, CardItem, Input, Icon} from 'native-base';
-import { StyleSheet, Linking, Alert } from 'react-native';
+import { StyleSheet, Linking, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
 class Registro extends Component {
+
+constructor(props) {
+  super(props)
+  this.state = {
+    user: '',
+    pass: '',
+    correo: ''
+  }
+}
+
+ UserRegistrationFunction = () =>{
+  
+  const { user }  = this.state ;
+  const { pass }  = this.state ;
+  const { correo }  = this.state ;
+
+ fetch('/api/registro.php', {
+   method: 'POST',
+   headers: {
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+   },
+   body: JSON.stringify({
+     user: user,
+     pass: pass,
+     correo: correo
+   })
+ }).then((response) => response.json())
+       .then((responseJson) => {
+ // Showing response message coming from server after inserting records.
+         Alert.alert(responseJson);
+       }).catch((error) => {
+         console.error(error);
+       });
+   }
+
   render(){
     const navegar = this.props.navigation;
     return (
@@ -38,21 +74,21 @@ class Registro extends Component {
               <Text style={styles.textCenter}>o</Text>
               <Item inlineLabel>
                 <Icon type='FontAwesome' name='user' />
-                  <Input placeholder='Nombre de usuario' />
-                </Item>
-                <Item inlineLabel last>
-                  <Icon type='Entypo' name='email' />
-                  <Input placeholder='Correo' />
+                  <Input placeholder='Nombre de usuario' onChangeText={(user)=> this.setState({user}) }/>
                 </Item>
                 <Item inlineLabel last>
                   <Icon type='FontAwesome' name='lock' />
-                  <Input placeholder='Contraseña' secureTextEntry={true} />
+                  <Input placeholder='Contraseña' secureTextEntry={true} onChangeText={(pass)=> this.setState({pass}) }/>
+                </Item>
+                <Item inlineLabel last>
+                  <Icon type='Entypo' name='email' />
+                  <Input placeholder='Correo' onChangeText={(correo)=> this.setState({correo}) }/>
                 </Item>
             </Body>
           </CardItem>
           <CardItem footer bordered>
             <Button primary style={styles.boton}
-            onPress={()=> Alert.alert('¡Usuario registrado!')}><Text> Registrarse </Text></Button>
+              onPress={this.UserRegistrationFunction}><Text> Registrarse </Text></Button>
           </CardItem>
         </Card>
       </Content>
