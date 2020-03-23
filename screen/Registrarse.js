@@ -10,45 +10,21 @@ import React, { Component } from 'react';
 import { Container, Card, Content,  Body, Text, Button, Item, CardItem, Input, Icon} from 'native-base';
 import { StyleSheet, Linking, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import api from '../data/api';
 
 const Stack = createStackNavigator();
 
 class Registro extends Component {
-
-constructor(props) {
-  super(props)
-  this.state = {
-    user: '',
-    pass: '',
-    correo: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: '',
+      pass: '',
+      correo: ''
+    }
   }
-}
- 
- UserRegistrationFunction = () =>{
-  
-  const { user }  = this.state ;
-  const { pass }  = this.state ;
-  const { correo }  = this.state ;
 
- fetch('/api/registro.php', {
-   method: 'POST',
-   headers: {
-     'Accept': 'application/json',
-     'Content-Type': 'application/json',
-   },
-   body: JSON.stringify({
-     user: user,
-     pass: pass,
-     correo: correo
-   })
- }).then((response) => response.json())
-       .then((responseJson) => {
- // Showing response message coming from server after inserting records.
-         Alert.alert(responseJson);
-       }).catch((error) => {
-         console.error(error);
-       });
-   }
+  register = () => api.registerData(this.state.user, this.state.pass, this.state.correo)
 
   render(){
     const navegar = this.props.navigation;
@@ -88,7 +64,7 @@ constructor(props) {
           </CardItem>
           <CardItem footer bordered>
             <Button primary style={styles.boton}
-              onPress={this.UserRegistrationFunction}><Text> Registrarse </Text></Button>
+              onPress={() => {this.register() }}><Text> Registrarse </Text></Button>
           </CardItem>
         </Card>
       </Content>

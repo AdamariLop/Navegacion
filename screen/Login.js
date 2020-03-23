@@ -10,19 +10,30 @@
 
 import React, { Component } from 'react';
 import { Container, Card, Content,  Body, Text, Button, Item, CardItem, Input, Icon, View } from 'native-base';
-import { StyleSheet, Modal, ActivityIndicator } from 'react-native';
+import { StyleSheet, Modal, ActivityIndicator, Alert } from 'react-native';
+import api from '../data/api';
 
 class Login extends Component {
   constructor(props){
     super(props);
     this.state={
-      nombre:'',
-      contraseña:'',
-      isloading: true,
-    } 
+      user:'',
+      pass:''
+    }
   }
-  ShowHideActivityIndicator = () =>{
-    const navegar=this.props.navigation;
+
+  
+  login = async () => {
+    let validarLog = await api.validarLog(this.state.user, this.state.pass)
+
+    if(validarLog.status == 1){
+      this.props.navigation.navigate('Principal');
+    }else{
+      Alert.alert('Usuario o clave inválidos');
+    }
+  }
+
+ /* ShowHideActivityIndicator = () =>{
     if(this.state.isLoading == true)
     {
       this.setState({isLoading: false})
@@ -35,7 +46,8 @@ class Login extends Component {
         this.setState({isLoading: false})
       },2000);
     }
-  }
+  }*/
+  
   render(){
     const navegar=this.props.navigation;
     return (
@@ -43,17 +55,17 @@ class Login extends Component {
       <Content padder contentContainerStyle={styles.content}>
         <Card>
         {
-                this.state.isLoading ?  
-                <Modal
-                  transparent = {true} 
-                  animationType = {'none'} 
-                  visible = {this.state.isloading}> 
-                    <View style = {styles.modalBackground}> 
-                      <View style = {styles.activityIndicator}> 
-                        <ActivityIndicator style={{padding: 20}}/> 
-                      </View> 
-                    </View> 
-                </Modal> : null
+          this.state.isLoading ?  
+            <Modal
+              transparent = {true} 
+              animationType = {'none'} 
+              visible = {this.state.isloading}> 
+                <View style = {styles.modalBackground}> 
+                  <View style = {styles.activityIndicator}> 
+                    <ActivityIndicator style={{padding: 20}}/> 
+                  </View> 
+                </View> 
+              </Modal> : null
               }
           <CardItem header bordered>
             <Text style={styles.textCenter}>Inicio de sesión</Text>
@@ -62,16 +74,16 @@ class Login extends Component {
             <Body>
               <Item inlineLabel>
                 <Icon type='FontAwesome' name='user' />
-                  <Input placeholder='Nombre de usuario' value={this.state.nombre} onChangeText={(nombre)=> this.setState({nombre}) }/>
+                  <Input placeholder='Nombre de usuario' onChangeText={(user)=> this.setState({user}) }/>
                 </Item>
                 <Item inlineLabel last>
                   <Icon type='FontAwesome' name='lock' />
-                  <Input placeholder='Contraseña' secureTextEntry={true} value={this.state.contraseña} onChangeText={(contraseña)=> this.setState({contraseña}) }/>
+                  <Input placeholder='Contraseña' secureTextEntry={true} onChangeText={(pass)=> this.setState({pass}) }/>
                 </Item>
             </Body>
           </CardItem>
           <CardItem footer bordered>
-            <Button primary style={styles.boton} onPress={this.ShowHideActivityIndicator}>
+            <Button primary style={styles.boton} onPress={() => {this.login() }}>
               <Text> Entrar </Text></Button>
           </CardItem>
             <Button primary style={{justifyContent:'center', marginLeft: '30%', width: 150}}
